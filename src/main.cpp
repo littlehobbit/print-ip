@@ -9,7 +9,7 @@
 
 template <typename T>
 void print_ip(T&& ip) {
-  std::cout << detail::to_string(ip) << std::endl;
+  detail::to_stream(std::cout, ip) << std::endl;
 }
 
 int main() {
