@@ -6,6 +6,12 @@ project(print_ip VERSION ${VERSION} LANGUAGES CXX)
 option(BUILD_TESTS OFF)
 option(BUILD_PACKAGE OFF)
 option(RUN_CLANG_TIDY OFF)
+option(RUN_IWYU OFF)
+
+if (${RUN_IWYU})
+  include(cmake/iwyu.cmake)
+  setup_iwyu_for_all_targets()
+endif()
 
 add_library(${PROJECT_NAME}_lib INTERFACE)
 
@@ -53,3 +59,4 @@ if (${RUN_CLANG_TIDY})
   setup_clang_tidy(${PROJECT_NAME}_tests PUBLIC)
   setup_clang_tidy(${PROJECT_NAME}_lib INTERFACE)
 endif()
+

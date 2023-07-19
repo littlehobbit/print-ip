@@ -1,9 +1,7 @@
-#include <algorithm>
-#include <functional>
 #include <iostream>
-#include <iterator>
 #include <list>
-#include <utility>
+#include <vector>
+#include <tuple>
 
 #include "print_ip.h"
 
