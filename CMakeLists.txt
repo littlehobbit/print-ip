@@ -7,11 +7,7 @@ option(BUILD_TESTS OFF)
 option(BUILD_PACKAGE OFF)
 option(RUN_CLANG_TIDY OFF)
 option(RUN_IWYU OFF)
-
-if (${RUN_IWYU})
-  include(cmake/iwyu.cmake)
-  setup_iwyu_for_all_targets()
-endif()
+option(BUILD_DOCS OFF)
 
 add_library(${PROJECT_NAME}_lib INTERFACE)
 
@@ -53,6 +49,7 @@ if (${BUILD_PACKAGE})
   include(CPack)
 endif()
 
+
 if (${RUN_CLANG_TIDY})
   include(cmake/clang-tidy.cmake)
   setup_clang_tidy(${PROJECT_NAME} PUBLIC)
@@ -60,3 +57,11 @@ if (${RUN_CLANG_TIDY})
   setup_clang_tidy(${PROJECT_NAME}_lib INTERFACE)
 endif()
 
+if (${RUN_IWYU})
+  include(cmake/iwyu.cmake)
+  setup_iwyu_for_all_targets()
+endif()
+
+if (${BUILD_DOCS})
+  include(docs/docs.cmake)
+endif()

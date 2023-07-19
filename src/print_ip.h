@@ -15,6 +15,15 @@
 
 namespace detail {
 
+/**
+ * @brief Helper function to print integral argument into the stream
+ *
+ * @tparam Stream - stream type
+ * @tparam Integral - intergral type
+ * @param out - stream
+ * @param integral - integral argument to print in stream
+ * @return Stream& - passed stream
+ */
 template <typename Stream, typename Integral,
           typename Require = std::enable_if_t<std::is_integral_v<Integral>>>
 auto to_stream(Stream& out, Integral integral) -> Stream& {
@@ -32,6 +41,16 @@ auto to_stream(Stream& out, Integral integral) -> Stream& {
   return out;
 }
 
+/**
+ * @brief Helper function to print string or convertible to stirng argument
+ * into the stream
+ *
+ * @tparam Stream - stream type
+ * @tparam String - std::string or convertiable to it
+ * @param out - stream
+ * @param string - string to print
+ * @return Stream& - passed stream
+ */
 template <typename Stream, typename String,
           typename Require = std::enable_if_t<
               std::is_constructible_v<std::string, std::decay_t<String>>>>
@@ -40,6 +59,13 @@ auto to_stream(Stream& out, String&& string) -> Stream& {
   return out;
 }
 
+/**
+ * @brief Compile-time class to check function overload existance. Return
+ * `value` true, if such overload exist.
+ *
+ * @tparam Func - function object (like lambda)
+ * @tparam Args - expected overload arguments
+ */
 template <typename Func, typename... Args>
 struct has_overload {
   template <typename... U>
@@ -67,6 +93,16 @@ constexpr auto end = [](auto&&... args) -> decltype(std::end(args...)) {
 template <typename T>
 constexpr auto has_end_v = has_overload<decltype(end), T>::value;
 
+/**
+ * @brief Helper function to print container type into the stream.
+ *
+ * @tparam Stream - stream type
+ * @tparam Container - Container type, whitch support `std::begin` and
+ * `std::end`
+ * @param out - stream
+ * @param container - container to print
+ * @return Stream& - passed stream
+ */
 template <typename Stream, class Container,
           typename Require = std::enable_if_t<
               has_begin_v<Container> && has_end_v<Container> &&
@@ -107,6 +143,17 @@ constexpr auto is_all_same_v = (std::is_same_v<T, Types> && ...);
 
 };  // namespace tuple
 
+/**
+ * @brief Helper function to print container type into the stream. If elements
+ * of container have different types, doesn't compile.
+ *
+ * @tparam Stream - stream type.
+ * @tparam Tuple - tuple type;
+ * @tparam Elements - tuple elements, should be same
+ * @param out - stream
+ * @param tuple - tuple to print
+ * @return Stream& - passed stream
+ */
 template <typename Stream, template <typename...> typename Tuple,
           typename... Elements,
           typename Require = std::enable_if_t<
