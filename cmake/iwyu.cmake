@@ -1,4 +1,4 @@
-macro(setup_iwyu_for_all_targets)
+macro(setup_iwyu_globally)
   find_program(IWYU_EXE 
     NAMES include-what-you-use iwyu
   )
@@ -14,4 +14,4 @@ macro(setup_iwyu_for_all_targets)
   set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE ${IWYU_EXE})
   set(CMAKE_C_INCLUDE_WHAT_YOU_USE ${IWYU_EXE})
   
-endmacro(setup_iwyu_for_all_targets)
+endmacro(setup_iwyu_globally)

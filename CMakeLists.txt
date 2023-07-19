@@ -59,7 +59,7 @@ endif()
 
 if (${RUN_IWYU})
   include(cmake/iwyu.cmake)
-  setup_iwyu_for_all_targets()
+  setup_iwyu_globally()
 endif()
 
 if (${BUILD_DOCS})
