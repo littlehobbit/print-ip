@@ -16,7 +16,7 @@ jobs:
         fetch-depth: 0
 
     - name: Install dependencies
-      run: sudo apt update && sudo apt install -y cmake g++ make libgtest-dev libgmock-dev git clang-tidy
+      run: sudo apt update && sudo apt install -y cmake g++ make libgtest-dev libgmock-dev git clang-tidy doxygen
 
     - name: Get Version
       id: get_version
@@ -33,7 +33,7 @@ jobs:
     - name: Configure CMake
       env:  
         VERSION: ${{steps.get_version.outputs.version}}
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_TESTS=ON -DBUILD_PACKAGE=ON -DVERSION=${{env.VERSION}} -DRUN_CLANG_TIDY=ON
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_TESTS=ON -DBUILD_DOCS=ON -DBUILD_PACKAGE=ON -DVERSION=${{env.VERSION}} -DRUN_CLANG_TIDY=ON
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --parallel
@@ -71,4 +71,14 @@ jobs:
         asset_path: ./build/print_ip-${{steps.get_version.outputs.version}}-Linux.deb
         asset_name: print_ip-${{env.BRANCH}}-${{steps.get_version.outputs.version}}-${{env.COMMIT_DISTANCE}}-Linux.deb
         asset_content_type: application/vnd.debian.binary-package
+
+    - name: Upload docs
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/docs/html/
+        enable_jekyll: false
+        allow_empty_commit: false
+        force_orphan: true
+        publish_branch: gh-pages
 
