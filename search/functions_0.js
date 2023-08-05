@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['detect_21',['detect',['../structdetail_1_1has__overload.html#a4a7ec620da7bdf8b1a070fb29f1be6d8',1,'detail::has_overload::detect(Func &amp;&amp;f, U &amp;&amp;... args) -&gt; decltype(f(args...))'],['../structdetail_1_1has__overload.html#aba25ee4271a2e3694ff0e4d461286dc3',1,'detail::has_overload::detect(...) -&gt; std::false_type']]]
+];
